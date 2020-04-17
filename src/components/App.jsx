@@ -14,23 +14,41 @@ const useStyles = createUseStyles(() => ({
       color: 'green',
       fontFamily: 'Verdana',
       fontSize: 16,
+      overflowY: 'hidden',
+      padding: 0,
+      margin: 0,
     },
     input: {
-      position: 'absolute',
-      bottom: 0,
+      position: 'fixed',
       border: '1px solid #666666',
-      left: 0,
       width: '100%',
       padding: 10,
       background: '#111111',
       color: 'green',
       fontFamily: 'Verdana',
       fontSize: 16,
+      bottom: 0,
     },
     p: {
       margin: 0,
       padding: 0,
     },
+  },
+  messages: {
+    flexGrow: 1,
+    padding: [10, 10, 50, 10],
+    overflowY: 'auto',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  wrap: {
+    width: '100vw',
+    height: '100vh',
+    maxHeight: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
@@ -55,17 +73,28 @@ const App = () => {
   };
 
   useEffect(() => {
-    ws.onmessage = ({ data }) => {
-      setMessages([...messages, data]);
+    ws.onopen = () => {
+      console.log('WebSocket Client Connected');
+    };
+    ws.onmessage = (m) => {
+      setMessages([...messages, JSON.parse(m.data)]);
     };
   });
   return (
     <div>
-      {hasName && (
-        <div>
-          {messages.map((m) => (
-            <p>{m}</p>
-          ))}
+      <div className={classes.wrap}>
+        <div className={classes.messages}>
+          {messages.map((m) =>
+            m.type === 'connection' ? (
+              <p key={m.id}>{m.name} has connected!</p>
+            ) : (
+              <p key={m.id}>
+                {m.name} says, &quot;{m.input}&quot;
+              </p>
+            ),
+          )}
+        </div>
+        {hasName ? (
           <input
             type="text"
             onChange={(e) => setMessage(e.target.value)}
@@ -73,17 +102,16 @@ const App = () => {
             value={message}
             placeholder="Enter message"
           />
-        </div>
-      )}
-      {!hasName && (
-        <input
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && login(e.target.value)}
-          value={name}
-          placeholder="What is your name?"
-        />
-      )}
+        ) : (
+          <input
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && login(e.target.value)}
+            value={name}
+            placeholder="What is your name?"
+          />
+        )}
+      </div>
     </div>
   );
 };
