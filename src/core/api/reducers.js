@@ -2,10 +2,15 @@ import actions from './actions';
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case actions.SET_WS:
+    case actions.SEND_MESSAGE:
       return {
         ...state,
-        ws: action.payload,
+        scale: action.payload,
+      };
+    case actions.SEND_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        scale: action.payload,
       };
 
     default:

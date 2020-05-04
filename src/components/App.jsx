@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { createUseStyles } from 'react-jss';
-import { w3cwebsocket as WebSocket } from 'websocket';
+import Input from 'components/Input';
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import webSocketsActions from 'core/webSockets/actions';
 
-const ws = new WebSocket('ws://rathe001-test-app.herokuapp.com');
+const connectToServer = () => {
+  window.websocketclient = new W3CWebSocket('ws://rathe001-test-app.herokuapp.com');
+};
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles({
   '@global': {
     '*': {
       boxSizing: 'border-box',
@@ -14,104 +19,49 @@ const useStyles = createUseStyles(() => ({
       color: 'green',
       fontFamily: 'Verdana',
       fontSize: 16,
+      margin: 0,
       overflowY: 'hidden',
       padding: 0,
-      margin: 0,
     },
-    input: {
-      position: 'fixed',
-      border: '1px solid #666666',
-      width: '100%',
-      padding: 10,
-      background: '#111111',
-      color: 'green',
-      fontFamily: 'Verdana',
-      fontSize: 16,
-      bottom: 0,
-    },
-    p: {
-      margin: 0,
-      padding: 0,
-    },
-  },
-  messages: {
-    flexGrow: 1,
-    padding: [10, 10, 50, 10],
-    overflowY: 'auto',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
   },
   wrap: {
-    width: '100vw',
-    height: '100vh',
-    maxHeight: '100%',
     display: 'flex',
     flexDirection: 'column',
+    height: '100vh',
+    maxHeight: '100%',
+    width: '100vw',
   },
-}));
+});
 
 const App = () => {
   const classes = useStyles();
-  const [hasName, setHasName] = useState(false);
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [name, setName] = useState('');
-  const sendMessage = (input) => {
-    ws.send(JSON.stringify({ name, input, type: 'message' }));
-  };
-  const uiMessage = (input) => {
-    setMessage(input);
-    sendMessage(input);
-    setMessage('');
-  };
-  const login = (input) => {
-    setHasName(true);
-    setName(input);
-    ws.send(JSON.stringify({ name: input, input: '', type: 'connection' }));
-  };
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    ws.onopen = () => {
+  if (!window.websocketclient) {
+    connectToServer();
+
+    window.websocketclient.onerror = (rs) => {
+      console.log('Connection Error');
+      dispatch(webSocketsActions.onerror(rs));
+    };
+    window.websocketclient.onclose = (rs) => {
+      console.log('WebSocket Client Disconnected');
+      dispatch(webSocketsActions.onclose(rs));
+      connectToServer();
+    };
+    window.websocketclient.onopen = (rs) => {
       console.log('WebSocket Client Connected');
+      dispatch(webSocketsActions.onopen(rs));
     };
-    ws.onmessage = (m) => {
-      setMessages([...messages, JSON.parse(m.data)]);
+    window.websocketclient.onmessage = (rs) => {
+      console.log(rs);
+      dispatch(webSocketsActions.onmessage(rs));
     };
-  });
+  }
+
   return (
-    <div>
-      <div className={classes.wrap}>
-        <div className={classes.messages}>
-          {messages.map((m) =>
-            m.type === 'connection' ? (
-              <p key={m.id}>{m.name} has connected!</p>
-            ) : (
-              <p key={m.id}>
-                {m.name} says, &quot;{m.input}&quot;
-              </p>
-            ),
-          )}
-        </div>
-        {hasName ? (
-          <input
-            type="text"
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && uiMessage(e.target.value)}
-            value={message}
-            placeholder="Enter message"
-          />
-        ) : (
-          <input
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && login(e.target.value)}
-            value={name}
-            placeholder="What is your name?"
-          />
-        )}
-      </div>
+    <div className={classes.wrap}>
+      <Input />
     </div>
   );
 };
