@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch } from 'react-redux';
 import apiActions from 'core/api/actions';
@@ -18,24 +18,29 @@ const useStyles = createUseStyles({
 });
 
 const Input = () => {
+  const [input, setInput] = useState('');
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const send = () => {
+  const send = (message) =>
     dispatch(
       apiActions.sendInput({
-        message: 'this is my test thing',
+        message,
       }),
     );
-  };
 
   return (
     <input
       className={classes.Input}
       type="text"
-      onChange={() => {}}
-      onKeyPress={(e) => e.key === 'Enter' && send()}
-      value=""
+      onChange={(e) => setInput(e.target.value)}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter') {
+          send(e.target.value);
+          setInput('');
+        }
+      }}
+      value={input}
       placeholder="Enter message"
     />
   );

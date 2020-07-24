@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUseStyles } from 'react-jss';
 import Input from 'components/Input';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
@@ -23,12 +23,17 @@ const useStyles = createUseStyles({
       overflowY: 'hidden',
       padding: 0,
     },
+    p: {
+      margin: [0, 0, 5, 0],
+      padding: 0,
+    },
   },
   wrap: {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
     maxHeight: '100%',
+    padding: 10,
     width: '100vw',
   },
 });
@@ -36,6 +41,7 @@ const useStyles = createUseStyles({
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { messages } = useSelector((state) => state.data);
 
   if (!window.websocketclient) {
     connectToServer();
@@ -60,9 +66,14 @@ const App = () => {
   }
 
   return (
-    <div className={classes.wrap}>
+    <>
+      <div className={classes.wrap}>
+        {messages.map((msg, i) => (
+          <p key={i}>{msg}</p>
+        ))}
+      </div>
       <Input />
-    </div>
+    </>
   );
 };
 

@@ -1,4 +1,7 @@
 export const initialState = {
+  data: {
+    messages: [],
+  },
   ui: {},
 };
 
