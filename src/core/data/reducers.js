@@ -1,8 +1,8 @@
-import actions from 'core/webSockets/actions';
+import actions from 'core/api/actions';
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case actions.ONMESSAGE:
+    case actions.SEND_SUCCESS:
       console.log(JSON.parse(action.payload.data).message);
       return {
         ...state,

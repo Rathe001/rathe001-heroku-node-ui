@@ -1,7 +1,6 @@
 export const initialState = {
-  data: {
-    messages: [],
-  },
+  data: {},
+  players: {},
   ui: {},
 };
 
