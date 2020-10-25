@@ -1,7 +1,8 @@
 export const initialState = {
   data: {},
-  players: {},
   ui: {},
+  user: {},
+  users: {},
 };
 
 export default initialState;

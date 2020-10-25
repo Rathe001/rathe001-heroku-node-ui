@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import ui from 'core/ui/reducers';
 import data from 'core/data/reducers';
-import players from 'core/players/reducers';
+import users from 'core/users/reducers';
+import user from 'core/user/reducers';
 
 const appReducer = combineReducers({
   data,
-  players,
   ui,
+  user,
+  users,
 });
 
 export default (state, action) => {

@@ -5,8 +5,7 @@ import { createUseStyles } from 'react-jss';
 import useWebSockets from 'hooks/useWebSockets';
 import apiActions from 'core/api/actions';
 import webSocketsActions from 'core/webSockets/actions';
-
-const colors = ['red', 'green', 'blue', 'pink', 'orange', 'white'];
+import Login from 'components/Login';
 
 const useStyles = createUseStyles({
   '@global': {
@@ -17,7 +16,7 @@ const useStyles = createUseStyles({
       background: 'black',
       color: 'green',
       fontFamily: 'Verdana',
-      fontSize: 4,
+      fontSize: 14,
       margin: 0,
       overflowY: 'hidden',
       padding: 0,
@@ -60,22 +59,22 @@ const useStyles = createUseStyles({
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const players = useSelector((state) => state.players);
+  const users = useSelector((state) => state.users);
 
   const grid = [...Array(40)].fill([...Array(80)]);
 
   const client = useWebSockets();
-
+  console.log('asdfasfasdfasdf');
   if (client) {
-    client.onerror = (rs) => {
+    client.onerror = () => {
       console.log('Connection Error');
       // dispatch(webSocketsActions.onerror(rs));
     };
-    client.onclose = (rs) => {
+    client.onclose = () => {
       console.log('WebSocket Client Disconnected');
       // dispatch(webSocketsActions.onclose(rs));
     };
-    client.onopen = (rs) => {
+    client.onopen = () => {
       console.log('WebSocket Client Connected');
       // dispatch(webSocketsActions.onopen(rs));
     };
@@ -86,24 +85,28 @@ const App = () => {
   }
 
   const hasActivePlayer = (x, y) => {
-    return Object.keys(players).find(
-      (id) => players[id].position.x === x && players[id].position.y === y,
+    return Object.keys(users).find(
+      (id) => users[id].position.x === x && users[id].position.y === y,
     );
   };
+  const loggedIn = false;
+  if (!loggedIn) {
+    return <Login />;
+  }
 
   return (
     <div
       tabIndex="0"
       role="textbox"
       className={classes.grid}
-      onKeyUp={(e) => {
-        if (e.key === 'ArrowUp') {
+      onKeyPress={(e) => {
+        if (e.key === 'w') {
           dispatch(apiActions.moveUp(client));
-        } else if (e.key === 'ArrowDown') {
+        } else if (e.key === 's') {
           dispatch(apiActions.moveDown(client));
-        } else if (e.key === 'ArrowLeft') {
+        } else if (e.key === 'a') {
           dispatch(apiActions.moveLeft(client));
-        } else if (e.key === 'ArrowRight') {
+        } else if (e.key === 'd') {
           dispatch(apiActions.moveRight(client));
         }
       }}
