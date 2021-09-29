@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "https://astigmapro.com/rathe001-heroku-node-ui/static/js/main.1ce378fb.chunk.js",
-    "main.js.map": "https://astigmapro.com/rathe001-heroku-node-ui/static/js/main.1ce378fb.chunk.js.map",
+    "main.js": "https://astigmapro.com/rathe001-heroku-node-ui/static/js/main.29073b51.chunk.js",
+    "main.js.map": "https://astigmapro.com/rathe001-heroku-node-ui/static/js/main.29073b51.chunk.js.map",
     "runtime-main.js": "https://astigmapro.com/rathe001-heroku-node-ui/static/js/runtime-main.5b7f486d.js",
     "runtime-main.js.map": "https://astigmapro.com/rathe001-heroku-node-ui/static/js/runtime-main.5b7f486d.js.map",
     "static/js/2.87db62ef.chunk.js": "https://astigmapro.com/rathe001-heroku-node-ui/static/js/2.87db62ef.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.5b7f486d.js",
     "static/js/2.87db62ef.chunk.js",
-    "static/js/main.1ce378fb.chunk.js"
+    "static/js/main.29073b51.chunk.js"
   ]
 }
