@@ -8,7 +8,7 @@ const useStyles = createUseStyles({
   '@global': {
     '*': {
       boxSizing: 'border-box',
-      imageRendering: 'pixelated',
+      imageRendering: 'auto',
     },
     body: {
       background: '#333',

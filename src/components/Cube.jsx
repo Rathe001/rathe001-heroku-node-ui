@@ -18,6 +18,7 @@ const useStyles = createUseStyles({
     transformOrigin: 'bottom',
   },
   cube: {
+    background: 'black',
     bottom: 0,
     height: 100,
     left: 0,
@@ -35,10 +36,14 @@ const useStyles = createUseStyles({
     width: '100%',
   },
   face: {
+    '&:hover': {
+      opacity: 1,
+    },
     background: 'url(/rathe001-heroku-node-ui/textures/grid.jpeg)',
     backgroundSize: 'contain',
     height: 100,
     left: 0,
+    opacity: 0.8,
     position: 'absolute',
     top: 0,
     width: 100,
