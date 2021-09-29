@@ -12,33 +12,15 @@
       "version": "latest"
     }
   },
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": ["airbnb"],
   "parser": "babel-eslint",
-  "plugins": ["prettier", "sort-destructure-keys", "sort-keys-fix"],
+  "plugins": ["sort-destructure-keys", "sort-keys-fix"],
   "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "trailingComma": "all",
-        "singleQuote": true,
-        "printWidth": 100
-      }
-    ],
-    "react/jsx-fragments": 0,
     "sort-destructure-keys/sort-destructure-keys": 2,
-    "sort-keys-fix/sort-keys-fix": 2
-  },
-  "overrides": [
-    {
-      "files": [".spec.jsx", ".spec.js"],
-      "env": { "jest": true }
-    },
-    {
-      "files": [".storybook/**", "*/stories/*"],
-      "rules": {
-        "import/no-extraneous-dependencies": "off",
-        "react/jsx-filename-extension": 0
-      }
-    }
-  ]
+    "sort-keys-fix/sort-keys-fix": 2,
+    "react/jsx-uses-react": 0,
+    "react/react-in-jsx-scope": 0,
+    "no-unused-vars": 1,
+    "react/jsx-fragments": 0
+  }
 }

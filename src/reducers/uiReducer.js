@@ -1,18 +1,21 @@
-import actions from './actions';
+// import actions from './actions';
+
+import uiActions from 'actions/uiActions';
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case actions.SEND_MESSAGE:
+    case uiActions.INIT: {
       return {
         ...state,
-        scale: action.payload,
+        isLoading: true,
       };
-    case actions.SEND_MESSAGE_SUCCESS:
+    }
+    case uiActions.INIT_SUCCESS: {
       return {
         ...state,
-        scale: action.payload,
+        isLoading: false,
       };
-
+    }
     default:
       return state;
   }

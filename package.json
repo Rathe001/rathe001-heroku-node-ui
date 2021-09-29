@@ -3,18 +3,19 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
-    "classnames": "^2.2.6",
+    "classnames": "^2.3.1",
     "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-jss": "10.4.0",
-    "react-redux": "^7.2.1",
-    "react-scripts": "4.0.0",
-    "redux": "^4.0.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-jss": "10.8.0",
+    "react-redux": "^7.2.5",
+    "react-scripts": "^4.0.3",
+    "redux": "^4.1.1",
     "redux-saga": "^1.1.3",
-    "websocket": "^1.0.32"
+    "websocket": "^1.0.34"
   },
   "scripts": {
+    "publishMe": "git push origin `git subtree split --prefix build master`:gh-pages --force",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -26,15 +27,13 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.21.5",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sort-destructure-keys": "^1.3.5",
-    "eslint-plugin-sort-keys-fix": "^1.1.1",
-    "prettier": "^2.1.2"
+    "eslint-plugin-sort-keys-fix": "^1.1.2"
   }
 }
