@@ -5,7 +5,7 @@ import Cube from 'components/Cube';
 const useStyles = createUseStyles({
   cubicLevel: {
     height: 500,
-    transform: 'translateZ(460px)',
+    // transform: 'translateZ(460px)',
     transformStyle: 'preserve-3d',
     width: 500,
   },

@@ -35,7 +35,7 @@ const useStyles = createUseStyles({
     width: '100%',
   },
   face: {
-    background: 'url(/textures/grid.jpeg)',
+    background: 'url(/rathe001-heroku-node-ui/textures/grid.jpeg)',
     backgroundSize: 'contain',
     height: 100,
     left: 0,
